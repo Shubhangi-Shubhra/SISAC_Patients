@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'; 
 import * as Components from './Components';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 
 function Patient() {
+    const navigate = useNavigate();
     const [signIn, toggle] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [selectedOption, setSelectedOption] = useState('');
@@ -17,10 +19,20 @@ function Patient() {
         setSelectedOption(event.target.value);
     };
 
+    const handleSignUpSubmit = (event) => {
+        event.preventDefault();
+        navigate('/success');
+    };
+
+    const handleSignInSubmit = (event) => {
+        event.preventDefault();
+        navigate('/successlogin');
+    };
+
     return (
         <Components.Container>
             <Components.SignUpContainer signinIn={signIn}>
-                <Components.Form style={{ width: '320px' }}>
+                <Components.Form style={{ width: '320px' }} onSubmit={handleSignUpSubmit}>
                     <Components.Title>Registration form Patient</Components.Title>
                     <Components.Input type='text' placeholder='Name' style={{ width: '100%' }} />
                     <Components.Input type='email' placeholder='Email' style={{ width: '100%' }} />
@@ -69,12 +81,12 @@ function Patient() {
                             }}
                         />
                     </div>
-                    <Components.Button style={{ width: '100%' }}>Sign Up</Components.Button>
+                    <Components.Button type="submit" style={{ width: '100%' }}>Sign Up</Components.Button>
                 </Components.Form>
             </Components.SignUpContainer>
 
             <Components.SignInContainer signinIn={signIn}>
-                <Components.Form>
+                <Components.Form onSubmit={handleSignInSubmit}>
                     <Components.Title>Log in</Components.Title>
                     <Components.Input type='email' placeholder='Email' />
                     <div style={{ position: 'relative', width: '100%' }}>
@@ -96,7 +108,7 @@ function Patient() {
                         />
                     </div>
                     <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
-                    <Components.Button>Submit</Components.Button>
+                    <Components.Button type="submit">Submit</Components.Button>
                 </Components.Form>
             </Components.SignInContainer>
 
